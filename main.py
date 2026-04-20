@@ -27,7 +27,7 @@ def crear_sala(sala: schemas.SalaCreate, db: Session=Depends(get_db)):
     
     salas = db.query(models.Sala).filter(models.Sala.numero_de_sala == sala.numero_de_sala).first()
     
-    if sala in salas:
+    if salas:
         raise HTTPException(status_code=400, detail="Esta sala ya esat registrada")
     
     nueva_sala = models.Sala(
