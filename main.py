@@ -2,6 +2,7 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import get_db, engine, Base
 import models, schemas
+import time
 
 Base.metadata.create_all(bind=engine)
 
@@ -53,6 +54,8 @@ def obtener_salas(db:Session=Depends(get_db)):
 
 @app.post("/reservas/", response_model=schemas.ReservaResponse)
 def reservar_sala(reserva: schemas.ReservaCreate, db: Session=Depends(get_db)):
+    
+    time.sleep(5)
     
     sala = db.query(models.Sala).filter(models.Sala.id == reserva.sala_id).first()
     if not sala:
